@@ -1,0 +1,37 @@
+# === FRONTEND ===
+DevTinderFrontend/dev-tinder/dist/
+DevTinderFrontend/dev-tinder/dist-ssr/
+DevTinderFrontend/dev-tinder/.local/
+DevTinderFrontend/dev-tinder/logs/
+DevTinderFrontend/dev-tinder/*.log
+DevTinderFrontend/dev-tinder/npm-debug.log*
+DevTinderFrontend/dev-tinder/yarn-debug.log*
+DevTinderFrontend/dev-tinder/yarn-error.log*
+DevTinderFrontend/dev-tinder/pnpm-debug.log*
+DevTinderFrontend/dev-tinder/lerna-debug.log*
+
+# === BACKEND ===
+DevTinderBackend/venv/
+DevTinderBackend/__pycache__/
+DevTinderBackend/*.pyc
+DevTinderBackend/*.log
+DevTinderBackend/.env
+node_modules/
+
+# === COMMON ===
+.env
+*.log
+.DS_Store
+
+# === IDE / Editor ===
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# === OS / Misc ===
+Thumbs.db
