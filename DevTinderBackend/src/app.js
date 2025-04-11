@@ -7,6 +7,8 @@ const authRouter = require("./router/authRouter");
 const profileRouter = require("./router/profileRouter");
 const requestRouter = require("./router/requestRouter");
 const userRouter = require("./router/userRouter");
+require("./utils/cornjob");
+
 const cors = require("cors");
 const app = express();
 app.use(
