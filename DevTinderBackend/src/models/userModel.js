@@ -75,7 +75,7 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.methods.getJWT = async function () {
-  const token = await jwt.sign({ _id: this._id }, pr);
+  const token = await jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
   return token;
 };
 userSchema.methods.validPassword = async function (passwordInputByUser) {
