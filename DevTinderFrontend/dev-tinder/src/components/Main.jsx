@@ -4,11 +4,9 @@ import SideSection from "./SideSection";
 
 const Main = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  console.log(showSidebar);
   const location = useLocation();
 
   useEffect(() => {
-    // Automatically hide sidebar on /profile
     if (location.pathname === "/profile") {
       setShowSidebar(false);
     }
@@ -33,8 +31,8 @@ const Main = () => {
         </div>
         <div
           className={`${
-            showSidebar && "z-0 hidden md:block"
-          } absolute h-auto md:relative w-full sm:w-3/6 md:w-2/3`}
+            showSidebar && "z-0 hidden md:block fixed"
+          }h-auto md:relative w-full sm:w-3/6 md:w-2/3`}
         >
           <Outlet />
         </div>

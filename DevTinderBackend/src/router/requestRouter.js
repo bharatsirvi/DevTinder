@@ -6,7 +6,9 @@ const {
   validateSendRequest,
   validateReviewRequest,
 } = require("../utils/validate");
+const { getIO, onlineUsers } = require("../utils/socket");
 const requestRouter = express.Router();
+const USER_SAFE_DATA = "firstName lastName age gender about skills photoUrl";
 
 requestRouter.post(
   "/request/send/:status/:toUserId",
@@ -23,11 +25,19 @@ requestRouter.post(
         status,
       });
       await connectionRequest.save();
-      // const emailRes = await sendEmail.run(
-      //   `Someone ${status} you`,
-      //    req.user.firstName
-      // );
-      // console.log("email res", emailRes);
+
+      const puplatedRequest = await connectionRequest.populate(
+        "fromUserId",
+        USER_SAFE_DATA
+      );
+      if (status == "interested") {
+        const io = getIO();
+        const targetSocketId = onlineUsers.get(toUserId);
+
+        if (targetSocketId) {
+          io.to(targetSocketId).emit("newRequest", puplatedRequest);
+        }
+      }
       res.json({
         message: "Request Sent Successfully",
         data: connectionRequest,
@@ -53,7 +63,8 @@ requestRouter.post(
         _id: requestId,
         toUserId: loggedInUser._id,
         status: "interested",
-      });
+      }).populate("toUserId", USER_SAFE_DATA);
+
       if (!connectionRequest) {
         return res.status(404).json({
           message: "Request not found",
@@ -61,6 +72,20 @@ requestRouter.post(
       }
       connectionRequest.status = status;
       await connectionRequest.save();
+      if (connectionRequest.status == "accepted") {
+        const io = getIO();
+        console.log(connectionRequest.fromUserId);
+        console.log(onlineUsers);
+        const targetSocketId = onlineUsers.get(
+          connectionRequest.fromUserId.toString()
+        );
+        console.log("target socket id", targetSocketId);
+        const newAcceptedRequest = connectionRequest.toUserId;
+        if (targetSocketId) {
+          io.to(targetSocketId).emit("requestAccepted", newAcceptedRequest);
+        }
+      }
+
       res.json({
         message: "Request Review Successfully",
         data: connectionRequest,

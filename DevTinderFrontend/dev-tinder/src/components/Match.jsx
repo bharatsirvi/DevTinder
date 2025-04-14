@@ -4,13 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { BACKEND_BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import Chat from "./Chat";
+import ErrorPage from "./Error";
 
 const Match = () => {
   const connections = useSelector((state) => state.connections);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const onlineUsers = useSelector((state) => state.onlineUsers);
+  const unseenCounts = useSelector((state) => state.unseenCounts);
+  const user = useSelector((state) => state.user);
+  const userId = user?._id;
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [chatWith, setChatWith] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleChatClick = (user) => {
+    setChatWith(user);
+  };
   const fetchMatches = async () => {
     try {
       const response = await axios.get(BACKEND_BASE_URL + "/user/connections", {
@@ -25,78 +36,105 @@ const Match = () => {
 
   useEffect(() => {
     fetchMatches();
-  }, []);
+    return () => {
+      setChatWith(null);
+    };
+  }, [userId]);
 
-  return (
-    <div className="overflow-scroll">
-      <div className="space-y-4">
-        {connections.length == 0 && (
-          <div className="flex flex-col items-center justify-center text-center p-6 space-y-4">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/6388/6388056.png"
-              alt="No matches"
-              className="w-20 max-w-full"
-            />
-            <h2 className="text-lg font-semibold text-base-content">
-              No Matches Yet
-            </h2>
-            <p className="text-sm text-base-content/60 max-w-md">
-              It looks a bit quiet here... Start exploring profiles and make
-              your first connection!
-            </p>
-          </div>
-        )}
-
-        {/* Header */}
-        {connections.length != 0 && (
-          <div className="px-2 text-lg font-semibold text-base-content">
-            Your Matches ✨
-          </div>
-        )}
-        {/* Connection List */}
-        {connections.map((user) => (
-          <div key={user?._id}>
-            <div className="flex items-center justify-between bg-base-100 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              {/* User Info */}
-              <div className="flex items-center gap-4">
-                <img
-                  className="w-12 h-12 rounded-xl object-cover cursor-pointer"
-                  src={user?.photoUrl}
-                  alt="photo"
-                  onClick={() => setSelectedImage(user?.photoUrl)}
-                />
-                <div>
-                  <div className=" text-xs  md:text-sm font-semibold text-base">
-                    {user?.firstName} {user?.lastName}
-                  </div>
-
-                  <div className="text-xs  md:text-sm uppercase font-semibold text-base-content/60">
-                    {user?.gender} • {user?.age} yrs
-                  </div>
-                </div>
-              </div>
-
-              {/* Message Button */}
-              <button className="btn btn-xs md:btn-sm btn-outline btn-info">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 0 1-4-.84L3 20l1.16-3.89A8.995 8.995 0 0 1 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z"
-                  />
-                </svg>
-                Chat
-              </button>
+  return chatWith != null ? (
+    <Chat
+      targetUser={chatWith}
+      setChatWith={setChatWith}
+      onlineStatus={onlineUsers.includes(chatWith._id)}
+    />
+  ) : (
+    <div className="h-[80vh]">
+      <div className="">
+        {connections.length !== 0 && (
+          <div className="px-4 py-4 bg-gradient-to-r to-base-100 from-info/10 rounded-lg my-2">
+            <div className="flex flex-col md:flex-row justify-center md:items-center gap-2">
+              <h2 className="text-md md:text-lg font-bold text-neatral-100">
+                People You've Matched With
+              </h2>
+              <span className="ml-auto px-2 py-1 text-xs font-medium bg-secondary/10 text-secondary rounded-full">
+                {connections.length} connections
+              </span>
             </div>
           </div>
-        ))}
+        )}
+
+        {/* Connection List */}
+        <div className="flex flex-col h-[80vh] gap-2">
+          {connections.map((user) => (
+            <div key={user?._id}>
+              <div className="flex items-center justify-between bg-base-100 p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-base-200 hover:border-info/30">
+                {/* Left: Avatar + Info */}
+                <div className="flex items-center gap-3">
+                  {/* Avatar with online indicator */}
+                  <div className="relative w-14 h-14">
+                    <img
+                      src={user?.photoUrl}
+                      alt="Avatar"
+                      className="w-full h-full object-cover rounded-lg border-2 border-base-100 cursor-pointer"
+                      onClick={() => setSelectedImage(user?.photoUrl)}
+                    />
+                    <span
+                      className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-base-100 ${
+                        onlineUsers.includes(user._id)
+                          ? "bg-green-500 shadow-[0_0_4px_1px_rgba(34,197,94,0.3)]"
+                          : "bg-gray-400"
+                      }`}
+                    ></span>
+                  </div>
+
+                  {/* User Info */}
+                  <div className="flex flex-col items-start">
+                    <div className="flex items-center gap-1">
+                      <h3 className="text-sm capitalize font-semibold">
+                        {user?.firstName} {user?.lastName}
+                      </h3>
+                      {onlineUsers.includes(user._id) && (
+                        <span className="text-xs text-success">• Online</span>
+                      )}
+                    </div>
+
+                    <p className="text-xs capitalize font-medium text-base-content/60 mt-0.5">
+                      {user?.gender} • {user?.age} yrs
+                    </p>
+
+                    {unseenCounts[user._id] > 0 && (
+                      <span className="mt-1 text-xs text-center font-medium bg-secondary/10 text-secondary px-2 py-0.5 rounded-full">
+                        {unseenCounts[user._id]} new message
+                        {unseenCounts[user._id] > 1 ? "s" : ""}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Chat Button */}
+                <button
+                  onClick={() => handleChatClick(user)}
+                  className="btn btn-sm bg-info/10 text-info border-0 rounded-full px-3 shadow-sm"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 0 1-4-.84L3 20l1.16-3.89A8.995 8.995 0 0 1 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z"
+                    />
+                  </svg>
+                  <span className="ml-1.5">Chat</span>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Image Modal */}
