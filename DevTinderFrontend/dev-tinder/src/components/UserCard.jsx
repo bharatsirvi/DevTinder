@@ -342,8 +342,12 @@ const UserCard = ({ user }) => {
             {/* About Section */}
             {user.about && (
               <div className="mb-2">
-                <h3 className="text-xs md:text-sm font-semibold mb-1 md:mb-2">About</h3>
-                <p className="text-white/90 text-[10px] md:text-sm">{user.about}</p>
+                <h3 className="text-xs md:text-sm font-semibold mb-1 md:mb-2">
+                  About
+                </h3>
+                <p className="text-white/90 text-[10px] md:text-sm">
+                  {user.about}
+                </p>
               </div>
             )}
           </div>

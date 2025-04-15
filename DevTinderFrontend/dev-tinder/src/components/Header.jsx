@@ -57,7 +57,7 @@ const Header = () => {
   };
 
   return (
-    <div className="navbar z-50 fixed bg-base-200 shadow-md px-6 md:px-8">
+    <div className="navbar z-50 top-0 fixed bg-base-200 shadow-md px-6 md:px-8">
       <div className="flex-1">
         <Link
           to="/"
@@ -183,7 +183,7 @@ const Header = () => {
         {user && (
           <div className="flex items-center gap-2">
             <div className="hidden md:block relative group">
-              <span className="text-sm font-medium bg-gradient-to-r to-info-content from-secondary bg-clip-text text-transparent">
+              <span className="text-sm font-medium bg-gradient-to-r to-info from-secondary bg-clip-text text-transparent">
                 Welcome, {user?.firstName}
               </span>
             </div>

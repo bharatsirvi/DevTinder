@@ -48,9 +48,9 @@ const Match = () => {
       onlineStatus={onlineUsers.includes(chatWith._id)}
     />
   ) : connections.length != 0 ? (
-    <div className="h-[80vh]">
+    <div className="p-1">
       <div className="">
-        <div className="px-4 py-4 bg-gradient-to-r to-base-100 from-info/10 rounded-lg my-2">
+        <div className="px-4 py-4 bg-gradient-to-r to-base-100 from-info/10 rounded-lg mb-2">
           <div className="flex flex-col md:flex-row justify-center md:items-center gap-2">
             <h2 className="text-md md:text-lg font-bold text-neatral-100">
               People You've Matched With
@@ -62,7 +62,7 @@ const Match = () => {
         </div>
 
         {/* Connection List */}
-        <div className="flex flex-col h-[80vh] gap-2">
+        <div className="flex flex-col  gap-2 ">
           {connections.map((user) => (
             <div key={user?._id}>
               <div className="flex items-center justify-between bg-base-100 p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-base-200 hover:border-info/30">
@@ -92,7 +92,7 @@ const Match = () => {
                         {user?.firstName} {user?.lastName}
                       </h3>
                       {onlineUsers.includes(user._id) && (
-                        <span className="text-xs text-success">• Online</span>
+                        <span className="hiddenmd:block text-xs text-success">• Online</span>
                       )}
                     </div>
 

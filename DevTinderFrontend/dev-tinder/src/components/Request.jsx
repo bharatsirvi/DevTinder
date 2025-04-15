@@ -43,7 +43,7 @@ const Request = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-200 p-4 md:p-6">
+    <div className="p-1">
       <div className="max-w-2xl mx-auto space-y-6">
         {requests.length != 0 && (
           <motion.h2

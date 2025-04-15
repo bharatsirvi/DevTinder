@@ -67,26 +67,26 @@ const Feed = () => {
 
             {/* Content with subtle animations */}
             <div className="space-y-4 max-w-md">
-              <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary to-info">
+              <h2 className="text-xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary to-info">
                 No Suggestions
               </h2>
 
-              <p className="text-base-content/70 text-sm md:text-base leading-relaxed">
+              <p className="text-base-content/70 text-xs md:text-sm leading-relaxed">
                 Looks like your feed is empty right now. Connect with more
                 people or update your profile to discover suggestions.
               </p>
 
               <div className="pt-6">
                 <button
-                  className="relative text-base-300 overflow-hidden btn bg-gradient-to-r from-secondary to-info rounded-full px-8 shadow-lg hover:shadow-secondary/30 transition-all duration-300 hover:-translate-y-1"
+                  className="relative text-base-300 overflow-hidden btn bg-gradient-to-r from-secondary to-info rounded-full px-2 md:px-8 shadow-lg hover:shadow-secondary/30 transition-all duration-300 hover:-translate-y-1"
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
                 >
-                  <span className="relative z-10 flex items-center">
-                    <span className="mr-2">✨</span>
+                  <span className="relative z-10 flex text-xs md:text-md items-center">
+                    <span className="mr-1 md:mr-2">✨</span>
                     Update Profile
-                    <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="ml-1 md:ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       →
                     </span>
                   </span>

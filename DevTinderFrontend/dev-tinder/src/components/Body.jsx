@@ -93,7 +93,7 @@ const Body = () => {
     <>
       <div>
         <Header />
-        <div className="py-16 h-screen overflow-hidden">
+        <div className="mt-16">
           <Outlet />
         </div>
       </div>

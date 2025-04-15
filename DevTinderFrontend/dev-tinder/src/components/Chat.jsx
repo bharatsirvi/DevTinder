@@ -145,12 +145,12 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
   };
 
   return (
-    <div className="flex flex-col w-full h-[80vh] max-w-md bg-base-100 rounded-xl overflow-hidden shadow-lg border border-base-200">
+    <div className="flex mt-2 flex-col w-full h-[75vh] max-w-md bg-base-100 rounded-xl overflow-hidden shadow-lg border border-base-200">
       {/* Header with gradient background */}
-      <div className="bg-gradient-to-r from-secondary/80 to-secondary-focus p-4 flex items-center gap-3">
+      <div className="bg-gradient-to-r from-info/10 to-transparent p-4 flex items-center gap-3">
         <button
           onClick={() => setChatWith(null)}
-          className="btn btn-circle btn-ghost btn-sm text-white hover:bg-white/20"
+          className="btn btn-circle btn-ghost btn-sm text-base-content hover:bg-white/20"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +167,7 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
         </button>
 
         <div className="avatar">
-          <div className="w-10 rounded-full ring-2 ring-white ring-offset-base-100 ring-offset-2">
+          <div className="w-10 rounded-full ring-1 ring-secondary ring-offset-base-100 ring-offset-2">
             <img
               src={targetUser.photoUrl || "/default-avatar.png"}
               alt={targetUser.firstName}
@@ -176,7 +176,7 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
         </div>
 
         <div className="flex-1 min-w-0">
-          <h2 className="font-bold text-white truncate">
+          <h2 className="font-bold text-base-content truncate">
             {targetUser.firstName} {targetUser.lastName}
           </h2>
           <div className="flex items-center gap-1">
@@ -185,7 +185,7 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
                 onlineStatus ? "bg-success" : "bg-gray-400"
               }`}
             />
-            <span className="text-xs text-white/90">
+            <span className="text-xs text-base-content/90">
               {onlineStatus ? "Online" : "Offline"}
             </span>
           </div>
@@ -194,7 +194,7 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
 
       {/* Chat Body */}
       <div
-        className="flex-1 overflow-y-auto p-4 space-y-4 bg-base-100 transition-all duration-300 
+        className="flex-1 [scrollbar-width:none] [-ms-overflow-style:none] overflow-y-auto p-4 space-y-4 bg-base-100 transition-all duration-300 
        bg-[radial-gradient(rgba(212,212,216,0.2)_1px,transparent_1px)] [background-size:16px_16px]
        dark:bg-[radial-gradient(rgba(63,63,70,0.2)_1px,transparent_1px)]"
       >
@@ -340,11 +340,19 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
           className="input  flex-1 focus:outline-none focus:ring-2 focus:ring-secondary/50"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              sendMessage();
+              e.target.blur();
+            }
+          }}
         />
 
         <button
-          onClick={sendMessage}
+          onClick={() => {
+            sendMessage();
+            inputRef.current?.blur();
+          }}
           disabled={!message.trim()}
           className={`btn btn-circle btn-sm ${
             message.trim() ? "btn-secondary" : "btn-ghost"
