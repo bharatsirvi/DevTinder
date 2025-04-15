@@ -51,7 +51,8 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
       setMessages(updatedMessages);
     });
 
-    return () =>{ socket.disconnect()
+    return () => {
+      socket.disconnect();
       dispatch(resetUnseenCount(targetUserId));
     };
   }, [targetUserId]);
