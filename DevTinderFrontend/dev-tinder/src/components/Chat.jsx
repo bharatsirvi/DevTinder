@@ -43,7 +43,6 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
 
     socket.on("receiveMessage", (data) => {
       setMessages((prev) => [...prev, data]);
-
       socket.emit("markSeen", { userId, targetUserId });
     });
 
@@ -61,7 +60,6 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Handle clicks outside emoji container
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -90,11 +88,10 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
     socket.emit("sendMessage", msgData);
 
     setMessage("");
-    setShowEmojis(false); // Close emoji box when sending message
+    setShowEmojis(false);
     inputRef.current?.focus();
   };
 
-  // Common emojis
   const emojis = [
     "😊",
     "😂",
@@ -134,7 +131,6 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
     inputRef.current?.focus();
   };
 
-  // Format timestamp
   const formatTime = (timestamp) => {
     return new Date(timestamp).toLocaleTimeString([], {
       hour: "2-digit",
@@ -144,17 +140,17 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
   };
 
   const toggleEmojiBox = (e) => {
-    e.stopPropagation(); // Prevent event from bubbling up
+    e.stopPropagation();
     setShowEmojis(!showEmojis);
   };
 
   return (
-    <div className="flex flex-col w-full h-[80vh] max-w-md bg-base-100 shadow-xl rounded-lg overflow-hidden">
-      {/* Header */}
-      <div className="bg-base-100 p-4 flex items-center gap-3 border-b border-base-200">
+    <div className="flex flex-col w-full h-[80vh] max-w-md bg-base-100 rounded-xl overflow-hidden shadow-lg border border-base-200">
+      {/* Header with gradient background */}
+      <div className="bg-gradient-to-r from-secondary/80 to-secondary-focus p-4 flex items-center gap-3">
         <button
           onClick={() => setChatWith(null)}
-          className="btn btn-sm btn-circle btn-ghost"
+          className="btn btn-circle btn-ghost btn-sm text-white hover:bg-white/20"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -169,30 +165,38 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
             />
           </svg>
         </button>
-        <div className="avatar online">
-          <div className="w-10 rounded-full">
+
+        <div className="avatar">
+          <div className="w-10 rounded-full ring-2 ring-white ring-offset-base-100 ring-offset-2">
             <img
               src={targetUser.photoUrl || "/default-avatar.png"}
-              alt="user"
+              alt={targetUser.firstName}
             />
           </div>
         </div>
-        <div className="flex flex-col gap-0">
-          <h2 className="font-bold text-sm">
+
+        <div className="flex-1 min-w-0">
+          <h2 className="font-bold text-white truncate">
             {targetUser.firstName} {targetUser.lastName}
           </h2>
-          {onlineStatus && (
-            <span className="text-xs text-success">• Online</span>
-          )}
+          <div className="flex items-center gap-1">
+            <div
+              className={`w-2 h-2 rounded-full ${
+                onlineStatus ? "bg-success" : "bg-gray-400"
+              }`}
+            />
+            <span className="text-xs text-white/90">
+              {onlineStatus ? "Online" : "Offline"}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Chat Body - Adjust height based on emoji picker visibility */}
+      {/* Chat Body */}
       <div
-        className="flex-1 overflow-y-auto p-4 space-y-4 bg-base-200 transition-all duration-300"
-        style={{
-          maxHeight: showEmojis ? "calc(100% - 220px)" : "calc(100% - 120px)",
-        }}
+        className="flex-1 overflow-y-auto p-4 space-y-4 bg-base-100 transition-all duration-300 
+       bg-[radial-gradient(rgba(212,212,216,0.2)_1px,transparent_1px)] [background-size:16px_16px]
+       dark:bg-[radial-gradient(rgba(63,63,70,0.2)_1px,transparent_1px)]"
       >
         {(() => {
           const grouped = {};
@@ -209,11 +213,17 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
             let label = date;
             if (date === today) label = "Today";
             else if (date === yesterday) label = "Yesterday";
+
             return (
-              <div key={i} className="space-y-2">
-                <div className="divider text-xs text-base-content/70">
-                  {label}
+              <div key={i} className="space-y-3">
+                <div className="flex items-center my-4">
+                  <div className="flex-1 border-t border-base-300"></div>
+                  <span className="px-3 text-xs font-medium text-base-content/50">
+                    {label}
+                  </span>
+                  <div className="flex-1 border-t border-base-300"></div>
                 </div>
+
                 {msgs.map((msg, index) => {
                   const isMine = msg.senderId === userId;
                   const isLast =
@@ -225,31 +235,37 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
                       key={index}
                       className={`flex ${
                         isMine ? "justify-end" : "justify-start"
-                      } mb-1`}
+                      }`}
                     >
-                      <div className="max-w-[75%]">
+                      <div
+                        className={`max-w-[80%] flex ${
+                          isMine ? "flex-col items-end" : "flex-col items-start"
+                        }`}
+                      >
                         <div
                           className={`px-4 py-2 rounded-2xl ${
                             isMine
-                              ? "bg-info text-info-content"
-                              : "bg-base-300 text-base-content"
-                          }`}
+                              ? "bg-pink-300 text-neutral rounded-tr-none"
+                              : "bg-base-200 text-base-content rounded-tl-none"
+                          } shadow-sm`}
                         >
                           {msg.message || msg.content}
                         </div>
 
                         {isLast && (
                           <div
-                            className={`flex text-xs mt-1 text-base-content/70 ${
+                            className={`flex items-center mt-1 text-xs text-base-content/50 ${
                               isMine ? "justify-end" : "justify-start"
                             }`}
                           >
                             <span>{formatTime(msg.createdAt)}</span>
                             {isMine && (
-                              <span className="ml-2">
-                                {msg.seenBy?.includes(targetUserId)
-                                  ? "Seen"
-                                  : "Sent"}
+                              <span className="ml-1.5">
+                                {msg.seenBy?.includes(targetUserId) ? (
+                                  <span className="text-success">✓✓</span>
+                                ) : (
+                                  <span>✓</span>
+                                )}
                               </span>
                             )}
                           </div>
@@ -265,25 +281,27 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Emoji Picker with Animation */}
+      {/* Emoji Picker */}
       <div
         ref={emojiContainerRef}
-        className={`bg-base-100 border-t border-base-200 overflow-hidden transition-all duration-300 ease-in-out`}
+        className={`bg-base-100 border-t border-base-200 overflow-hidden transition-all duration-300 ease-in-out ${
+          showEmojis ? "shadow-inner" : ""
+        }`}
         style={{
           maxHeight: showEmojis ? "160px" : "0px",
           opacity: showEmojis ? 1 : 0,
-          padding: showEmojis ? "10px" : "0 10px",
+          padding: showEmojis ? "12px" : "0 12px",
         }}
       >
-        <div className="p-2 grid grid-cols-8 gap-3">
+        <div className="p-2 grid grid-cols-8 gap-2">
           {emojis.map((emoji, index) => (
             <button
               key={index}
-              className="btn btn-ghost p-0 h-10 min-h-0 w-10 text-xl rounded-full hover:bg-base-200 transition-all duration-150"
+              className="btn btn-ghost p-0 h-9 min-h-0 w-9 text-xl rounded-full hover:bg-base-200 active:scale-90 transition-all duration-150"
               style={{
-                transform: showEmojis ? "translateY(0)" : "translateY(20px)",
+                transform: showEmojis ? "scale(1)" : "scale(0)",
                 opacity: showEmojis ? 1 : 0,
-                transitionDelay: `${index * 10}ms`,
+                transitionDelay: `${index * 20}ms`,
               }}
               onClick={() => addEmoji(emoji)}
             >
@@ -293,35 +311,48 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
         </div>
       </div>
 
-      {/* Chat Input */}
+      {/* Message Input */}
       <div className="p-3 bg-base-100 border-t border-base-200 flex items-center gap-2">
         <button
           className={`btn btn-circle btn-sm ${
-            showEmojis ? "btn-primary" : "btn-ghost"
+            showEmojis ? "btn-secondary" : "btn-ghost"
           }`}
           onClick={toggleEmojiBox}
         >
-          <span className="text-lg">😊</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z"
+              clipRule="evenodd"
+            />
+          </svg>
         </button>
+
         <input
           ref={inputRef}
           type="text"
           placeholder="Type a message..."
-          className="input input-bordered flex-1"
+          className="input  flex-1 focus:outline-none focus:ring-2 focus:ring-secondary/50"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
+
         <button
           onClick={sendMessage}
           disabled={!message.trim()}
-          className={`btn btn-circle ${
-            message.trim() ? "btn-secondary" : "btn-ghost btn-disabled"
+          className={`btn btn-circle btn-sm ${
+            message.trim() ? "btn-secondary" : "btn-ghost"
           }`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
+            className="h-3 w-3"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

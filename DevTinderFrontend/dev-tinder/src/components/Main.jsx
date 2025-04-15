@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import SideSection from "./SideSection";
+import { useDispatch, useSelector } from "react-redux";
+import { setShowSidebar } from "../utils/slices/configSlice";
 
 const Main = () => {
-  const [showSidebar, setShowSidebar] = useState(false);
+  const { showSidebar } = useSelector((store) => store.config);
+  const dispatch = useDispatch();
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/profile") {
-      setShowSidebar(false);
+      dispatch(setShowSidebar(false));
     }
   }, [location]);
 
   return (
     <>
       <div className="flex h-full justify-center">
-        <button
-          onClick={() => setShowSidebar(!showSidebar)}
-          className="fixed bottom-0 right-0 z-100 md:hidden m-4 btn-sm btn btn-secondary text-white "
-        >
-          {showSidebar ? "← back" : "See All Connections →"}
-        </button>
-
         <div
           className={`${
             !showSidebar && "hidden md:block"

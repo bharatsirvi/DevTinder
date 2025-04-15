@@ -93,7 +93,7 @@ const Body = () => {
     <>
       <div>
         <Header />
-        <div className="py-16 h-screen">
+        <div className="py-16 h-screen overflow-hidden">
           <Outlet />
         </div>
       </div>

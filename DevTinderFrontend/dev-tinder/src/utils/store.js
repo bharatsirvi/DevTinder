@@ -5,6 +5,7 @@ import connectionsReducer from "./slices/connectionsSlice";
 import requestsReducer from "./slices/requestsSlice";
 import onlineUsersReducer from "./slices/onlineUsersSlice";
 import unseenCountsReducer from "./slices/unseenCounts";
+import configReducer from "./slices/configSlice";
 const store = configureStore({
   reducer: {
     user: userReducer,
@@ -13,6 +14,7 @@ const store = configureStore({
     requests: requestsReducer,
     onlineUsers: onlineUsersReducer,
     unseenCounts: unseenCountsReducer,
+    config: configReducer,
   },
 });
 
