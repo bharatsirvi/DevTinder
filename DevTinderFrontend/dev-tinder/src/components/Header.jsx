@@ -7,7 +7,7 @@ import { BACKEND_BASE_URL } from "../utils/constants";
 import logo from "../assets/logo.png";
 import { removeUser } from "../utils/slices/userSlice";
 import { setShowSidebar } from "../utils/slices/configSlice";
-
+import { Code } from "lucide-react";
 const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
@@ -57,13 +57,20 @@ const Header = () => {
   };
 
   return (
-    <div className="navbar z-50 top-0 fixed bg-base-200 shadow-md px-6 md:px-8">
-      <div className="flex-1">
+    <div className="navbar flex justify-between z-50 top-0 fixed bg-base-200 shadow-md px-6 md:px-8">
+      <div>
         <Link
           to="/"
-          className="cursor-pointer text-secondary text-xl font-bold"
+          className=" cursor-pointer text-secondary text-xl font-bold"
         >
-          <img className="w-32 md:w-40" src={logo} alt="Logo" />
+          <div className="flex gap-2 items-center">
+            <Code size={24} className="text-secondary" />
+
+            <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-secondary to-info bg-clip-text text-transparent">
+              DevTinder
+            </h1>
+          </div>
+          {/* <img className="w-32 md:w-40" src={logo} alt="Logo" /> */}
         </Link>
       </div>
       <div className="flex gap-4 items-center">
@@ -183,7 +190,7 @@ const Header = () => {
         {user && (
           <div className="flex items-center gap-2">
             <div className="hidden md:block relative group">
-              <span className="text-sm font-medium bg-gradient-to-r to-info from-secondary bg-clip-text text-transparent">
+              <span className="text-sm font-medium bg-gradient-to-r to-info from-secondary bg-clip-text text-transparent capitalize">
                 Welcome, {user?.firstName}
               </span>
             </div>
