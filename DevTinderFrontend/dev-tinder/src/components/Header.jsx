@@ -182,7 +182,7 @@ const Header = () => {
 
         {user && (
           <div className="flex items-center gap-2">
-            <div className="relative group">
+            <div className="hidden md:block relative group">
               <span className="text-sm font-medium bg-gradient-to-r to-info-content from-secondary bg-clip-text text-transparent">
                 Welcome, {user?.firstName}
               </span>

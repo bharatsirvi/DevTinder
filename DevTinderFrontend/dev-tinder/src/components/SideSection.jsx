@@ -38,7 +38,7 @@ const SideSection = () => {
 
           {/* Animated Background */}
           <motion.div
-            className={`absolute top-1 bottom-1 left-1 bg-info/80 rounded-md shadow-sm`}
+            className={`absolute top-1 bottom-1 left-1 bg-secondary/80 rounded-md shadow-sm`}
             initial={false}
             animate={{
               left: `${tab * 50}%`,
