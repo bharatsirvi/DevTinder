@@ -154,13 +154,16 @@ const Login = () => {
               </div>
 
               <div className="form-control relative">
-                <label className="label">
+                <label className="label mb-1">
                   <span className="label-text">Password</span>
+                  <span>
+                    <Lock size={16} />
+                  </span>
                 </label>
                 <div className="relative">
                   <input
                     ref={passwordRef}
-                    type={showPassword ? "password": "text"}
+                    type={showPassword ? "password" : "text"}
                     placeholder="••••••••"
                     className="input input-bordered w-full pr-10"
                     minLength="8"

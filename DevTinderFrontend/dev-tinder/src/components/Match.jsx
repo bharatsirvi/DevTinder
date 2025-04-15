@@ -92,12 +92,14 @@ const Match = () => {
                         {user?.firstName} {user?.lastName}
                       </h3>
                       {onlineUsers.includes(user._id) && (
-                        <span className="hiddenmd:block text-xs text-success">• Online</span>
+                        <span className="hiddenmd:block text-xs text-success">
+                          • Online
+                        </span>
                       )}
                     </div>
 
                     <p className="text-xs capitalize font-medium text-base-content/60 mt-0.5">
-                      {user?.gender} • {user?.age} yrs
+                      {user?.gender} {user?.age > 0 && " • " +user?.age + " Yrs"}
                     </p>
 
                     {unseenCounts[user._id] > 0 && (

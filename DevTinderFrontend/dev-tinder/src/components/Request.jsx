@@ -202,8 +202,9 @@ const Request = () => {
                     </div>
                     <div className="text-[10px] md:text-xs text-base-content/60 font-medium capitalize tracking-wide flex items-center gap-2">
                       <span>{profile?.gender}</span>
-                      <span className="w-1 h-1 rounded-full bg-base-content/30"></span>
-                      <span>{profile?.age} <span className="hidden md:inline">years</span></span>
+                      <span>
+                        {profile?.age > 0 && " • " + profile?.age + " Yrs"}{" "}
+                      </span>
                     </div>
                     {profile?.bio && (
                       <p className="text-xs text-base-content/70 mt-1 truncate">
