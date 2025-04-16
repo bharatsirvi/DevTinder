@@ -99,7 +99,8 @@ const Match = () => {
                     </div>
 
                     <p className="text-xs capitalize font-medium text-base-content/60 mt-0.5">
-                      {user?.gender} {user?.age > 0 && " • " +user?.age + " Yrs"}
+                      {user?.gender}{" "}
+                      {user?.age > 0 && " • " + user?.age + " Yrs"}
                     </p>
 
                     {unseenCounts[user._id] > 0 && (
