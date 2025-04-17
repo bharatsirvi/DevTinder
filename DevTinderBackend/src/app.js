@@ -14,7 +14,8 @@ const chatRouter = require("./router/chatRouter");
 // require("./utils/cornjob");
 const cors = require("cors");
 const app = express();
-const {initializeSocket} = require("./utils/socket");
+const { initializeSocket } = require("./utils/socket");
+const path = require("path");
 
 app.use(
   cors({
@@ -24,6 +25,8 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/", authRouter);
 app.use("/", profileRouter);

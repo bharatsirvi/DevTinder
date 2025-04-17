@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Header from "./Header";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,9 +18,9 @@ import { addConnection } from "../utils/slices/connectionsSlice";
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector((store) => store.user);
-  const userId = userData?._id;
-
+  const user = useSelector((store) => store.user);
+  const userId = user?._id;
+  const location = useLocation();
   const fecthUser = async () => {
     try {
       const response = await axios.get(BACKEND_BASE_URL + "/profile/view", {
@@ -28,7 +28,6 @@ const Body = () => {
       });
       dispatch(addUser(response.data.data));
     } catch (error) {
-      console.log("body error", error);
       if (error.status == 401) return navigate("/login");
       else return <ErrorPage />;
     }
@@ -51,8 +50,12 @@ const Body = () => {
   };
 
   useEffect(() => {
-    if (!userData) fecthUser();
+    fecthUser();
     fetchRequests();
+    if (user) {
+      if (user?.photoUrl) navigate("/");
+      else navigate("/signup/setup");
+    }
   }, [userId]);
 
   useEffect(() => {

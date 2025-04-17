@@ -39,9 +39,12 @@ const Login = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (user) navigate("/");
+    if (user) {
+      if (user?.photoUrl) navigate("/");
+      else navigate("/signup/setup");
+    }
     setFunFact(FunFacts[Math.floor(Math.random() * FunFacts.length)]);
-  }, [user, navigate]);
+  }, [user]);
 
   const handleLoginClick = async () => {
     setLoading(true);

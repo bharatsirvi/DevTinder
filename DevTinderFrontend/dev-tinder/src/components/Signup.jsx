@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/slices/userSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BACKEND_BASE_URL } from "../utils/constants";
 import {
   Heart,
@@ -16,6 +16,8 @@ import {
   Smile,
   User,
 } from "lucide-react";
+import { setInitialSetup } from "../utils/slices/configSlice";
+import InitialSetup from "./InitialSetup";
 
 const FunFacts = [
   "82% of friendships here start with a meme exchange",
@@ -28,21 +30,29 @@ const FunFacts = [
 const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [ProfileSetup, setProfileSetup] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // In
   const [funFact, setFunFact] = useState("");
   const emailRef = useRef();
   const passwordRef = useRef();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-
+  const params = useParams();
   useEffect(() => {
-    if (user) navigate("/");
+    if (user) {
+      if (user?.photoUrl) navigate("/");
+      else navigate("/signup/setup");
+    }
     setFunFact(FunFacts[Math.floor(Math.random() * FunFacts.length)]);
-  }, [user, navigate]);
-
+  }, [user]);
+  useEffect(() => {
+    // Check if the flag parameter equals "setup"
+    if (params?.flag === "setup") {
+      setProfileSetup(true);
+    }
+  }, [params]);
   const handleSignupClick = async () => {
     setLoading(true);
     setErrorMsg("");
@@ -57,8 +67,7 @@ const Signup = () => {
         },
         { withCredentials: true }
       );
-      dispatch(addUser(response.data.data));
-      navigate("/");
+      setProfileSetup(true);
     } catch (error) {
       setErrorMsg(
         error?.response?.data?.message || "Oops! Let's try that again"
@@ -67,7 +76,9 @@ const Signup = () => {
     setLoading(false);
   };
 
-  return (
+  return ProfileSetup ? (
+    <InitialSetup />
+  ) : (
     <div className="min-h-screen md:fixed md:left-0 md:right-0 md:top-10 md:bottom-0 flex items-center justify-center bg-gradient-to-br from-base-100 to-base-200 p-4">
       <div className="w-full max-w-6xl flex flex-col lg:flex-row bg-base-100 rounded-2xl overflow-hidden shadow-2xl border border-base-300">
         {/* Left Section - Identical to Login */}
@@ -252,7 +263,7 @@ const Signup = () => {
                 </div>
               </div>
               {errorMsg && (
-                <div className="text-error shadow-lg">
+                <div className="text-error">
                   <div>
                     <span>😅 {errorMsg}</span>
                   </div>

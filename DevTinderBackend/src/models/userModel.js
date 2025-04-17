@@ -51,12 +51,6 @@ const userSchema = new mongoose.Schema(
     },
     photoUrl: {
       type: String,
-      default:
-        "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHBvcnRyYWl0fGVufDB8fDB8fHww",
-      validate(value) {
-        if (!validator.isURL(value))
-          throw new Error("photoUrl is not valid url");
-      },
     },
     about: {
       type: String,

@@ -1,5 +1,5 @@
 import Body from "./components/Body";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import { Provider } from "react-redux";
@@ -20,6 +20,8 @@ function App() {
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/signup/:flag" element={<Signup />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
       </BrowserRouter>

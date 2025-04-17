@@ -6,7 +6,7 @@ import axios from "axios";
 import { BACKEND_BASE_URL } from "../utils/constants";
 import logo from "../assets/logo.png";
 import { removeUser } from "../utils/slices/userSlice";
-import { setShowSidebar } from "../utils/slices/configSlice";
+import { setInitialSetup, setShowSidebar } from "../utils/slices/configSlice";
 import { Code } from "lucide-react";
 const Header = () => {
   const dispatch = useDispatch();
@@ -46,6 +46,8 @@ const Header = () => {
         }
       );
       dispatch(removeUser());
+      dispatch(setInitialSetup(false));
+      dispatch(showSidebar(false));
       navigate("/login");
     } catch (error) {
       return ErrorPage;
