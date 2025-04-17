@@ -42,7 +42,7 @@ profileRouter.post(
             overwrite: true,
             transformation: [
               { width: 300, height: 500, crop: "limit" },
-              { quality: "auto" },
+              { quality: "100" },
             ],
           });
 
