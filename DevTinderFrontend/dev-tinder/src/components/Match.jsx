@@ -11,6 +11,7 @@ const Match = () => {
   const connections = useSelector((state) => state.connections);
   const onlineUsers = useSelector((state) => state.onlineUsers);
   const unseenCounts = useSelector((state) => state.unseenCounts);
+  const showSidebar = useSelector((state) => state.config.showSidebar);
   const user = useSelector((state) => state.user);
   const userId = user?._id;
 
@@ -36,12 +37,13 @@ const Match = () => {
 
   useEffect(() => {
     fetchMatches();
+    if (!showSidebar) setChatWith(false);
     return () => {
       setChatWith(null);
     };
-  }, [userId]);
+  }, [userId,showSidebar]);
 
-  return chatWith != null ? (
+  return chatWith ? (
     <Chat
       targetUser={chatWith}
       setChatWith={setChatWith}

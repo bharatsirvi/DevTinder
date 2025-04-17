@@ -28,9 +28,9 @@ const UserCard = ({ user }) => {
         { withCredentials: true }
       );
       console.log("request" + status, response);
+      animateCardSwipe(status === "interested" ? "right" : "left");
 
       // Animate the card off screen before removing it
-      animateCardSwipe(status === "interested" ? "right" : "left");
 
       // Remove the user after animation completes
       setTimeout(() => {

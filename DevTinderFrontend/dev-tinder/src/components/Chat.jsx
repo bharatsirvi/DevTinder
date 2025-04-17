@@ -145,7 +145,7 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
   };
 
   return (
-    <div className="flex mt-2 flex-col w-full h-[75vh] max-w-md rounded-xl overflow-hidden shadow-lg border border-base-200">
+    <div className="flex mt-2 flex-col w-full h-[70vh] max-w-md rounded-xl overflow-hidden shadow-lg border border-base-200">
       {/* Header with gradient background */}
       <div className="bg-gradient-to-r from-info/10 to-transparent p-4 flex items-center gap-3">
         <button
