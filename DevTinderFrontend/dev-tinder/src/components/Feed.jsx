@@ -42,13 +42,54 @@ const Feed = () => {
     return <ErrorPage />;
   }
 
+  // Show only top 3 cards in stack
+  const MAX_VISIBLE_CARDS = 3;
+
   return (
-    <div className="w-full z-0 flex justify-center items-start px-4 py-4">
-      <div className="w-9/12 md:w-1/2 mt-10 md:mt-0">
+    <div className="w-full h-screen z-0 flex justify-center items-start px-4 py-4">
+      <div className="w-full md:w-1/2 mt-10 md:mt-0 relative">
         {loading ? (
-         <UserCardSkeleton/>
+          <div className="card-stack-wrapper relative h-96 md:h-120">
+            {[...Array(MAX_VISIBLE_CARDS)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-full rounded-2xl overflow-hidden border border-base-300"
+                style={{
+                  zIndex: 30 - i * 10,
+                  top: `${i * 5}px`,
+                  left: `${-i * 8}px`, // Each lower card is shifted left
+                  transform: `rotate(${-i * 0.5}deg)`,
+                  boxShadow: `0 ${1 + i}px ${2 + i * 2}px rgba(0, 0, 0, 0.${
+                    1 + i
+                  })`,
+                }}
+              >
+                <UserCardSkeleton />
+              </div>
+            ))}
+          </div>
         ) : feed.length > 0 ? (
-          <UserCard user={feed[0]} key={feed[0]._id} />
+          <div className="relative w-[80%] aspect-[3/5] mx-auto md:mt-8">
+            {feed.slice(0, 3).map((user, i) => (
+              <div
+                key={user._id}
+                className="absolute w-full h-full transition-all duration-200 origin-bottom"
+                style={{
+                  zIndex: 30 - i * 10,
+                  transform: `translateY(${i * 2}px) rotate(${i * 1.5}deg)`,
+
+                  ...(i === 0 && {
+                    cursor: "pointer",
+                    filter: "brightness(1.02)",
+                  }),
+                }}
+              >
+                <div className="card h-full">
+                  <UserCard user={user} />
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="relative mt-20 rounded-2xl p-8 md:p-12 flex flex-col items-center justify-center text-center bg-gradient-to-br from-base-100 to-base-200 border border-base-300/50 shadow-xl overflow-hidden">
             {/* Floating dots background */}
@@ -111,7 +152,7 @@ const Feed = () => {
               </div>
             </div>
 
-            {/* CSS for floating animation (add to your global CSS) */}
+            {/* CSS for floating animation */}
             <style jsx>{`
               @keyframes float {
                 0%,

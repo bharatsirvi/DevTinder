@@ -59,7 +59,7 @@ const Header = () => {
   };
 
   return (
-    <div className="navbar flex justify-between z-50 top-0 fixed bg-base-200 shadow-md px-6 md:px-8">
+    <div className="navbar flex justify-between z-50 top-0 fixed backdrop-blur-md bg-gradient-to-l from-secondary/10 via-primary/10 to-info/10  shadow-xs px-6 md:px-8 shadow-base-content/30 bg-base-100">
       <div>
         <Link
           to="/"

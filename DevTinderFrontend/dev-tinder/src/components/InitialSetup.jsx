@@ -185,7 +185,7 @@ const InitialSetup = () => {
   const isStep3Valid = true; // About is optional
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br bg-base-200 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-secondary/10 via-primary/10 to-info/10 p-4">
       <div className="w-full max-w-6xl flex flex-col lg:flex-row bg-base-100 rounded-3xl overflow-hidden shadow-2xl">
         {/* Left Section - Enhanced */}
         <div className="hidden md:block lg:w-5/12 p-10 text-white bg-gradient-to-br from-info via-primary to-secondary relative overflow-hidden">

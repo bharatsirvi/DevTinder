@@ -199,52 +199,24 @@ const UserCard = ({ user }) => {
   }, [isDragging, position, startPosition, isAnimating]);
 
   return (
-    <div className="w-full max-w-sm mx-auto my-8 relative">
-      {/* Background Indicators */}
-      <div className="absolute inset-0 left-0 right-0 overflow-hidden rounded-2xl z-0">
-        {/* LIKE indicator (right) */}
-        <div
-          className={`absolute right-0 top-0 h-full flex items-center justify-center pl-8 transition-all duration-200 ${
-            swipeDirection === "right"
-              ? "opacity-100 scale-100 -translate-x-10"
-              : "opacity-0 scale-95 translate-x-10"
-          }`}
-        >
-          <div className="border-4 border-green-500 rounded-xl px-6 py-3 bg-green-500/10 backdrop-blur-sm">
-            <span className="text-green-500 text-2xl md:text-4xl font-bold uppercase tracking-wider">
-              LIKE
-            </span>
-          </div>
-        </div>
-
-        {/* NOPE indicator (left) */}
-        <div
-          className={`absolute left-0 top-0 h-full flex items-center justify-center pr-8 transition-all duration-200 ${
-            swipeDirection === "left"
-              ? "opacity-100 scale-100 translate-x-10"
-              : "opacity-0 scale-95 -translate-x-10"
-          }`}
-        >
-          <div className="border-4 border-red-500 rounded-xl px-5 py-3 bg-red-500/10 backdrop-blur-sm">
-            <span className="text-red-500 text-2xl md:text-4xl font-bold uppercase tracking-wider">
-              NOPE
-            </span>
-          </div>
-        </div>
-      </div>
-
+    <div className="w-full max-w-sm mx-auto my-8 relative rounded-xl">
       {/* Animated background gradients for better visual feedback */}
-      <div className="absolute inset-0 overflow-hidden rounded-2xl z-0">
+      <div
+        className="absolute inset-0 overflow-hidden rounded-2xl z-0"
+        style={{
+          transform: `translateX(${2}}px) translateY(${2}px) rotate(${2}deg)`,
+        }}
+      >
         {/* Right swipe gradient */}
         <div
-          className={`absolute inset-0 bg-gradient-to-r to-transparent from-green-500/30 transition-opacity duration-300 ${
+          className={`absolute inset-0 bg-gradient-to-r to-green-500/30 from-green-500/30 transition-opacity duration-300 ${
             swipeDirection === "right" ? "opacity-70" : "opacity-0"
           }`}
         />
 
         {/* Left swipe gradient */}
         <div
-          className={`absolute inset-0 bg-gradient-to-l to-transparent from-red-500/30 transition-opacity duration-300 ${
+          className={`absolute inset-0 bg-gradient-to-l to-red-500/30 from-red-500/30 transition-opacity duration-300 ${
             swipeDirection === "left" ? "opacity-70" : "opacity-0"
           }`}
         />

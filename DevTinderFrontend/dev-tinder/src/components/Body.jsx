@@ -94,8 +94,10 @@ const Body = () => {
 
   return (
     <>
-      <div>
-        <Header />
+      <div className="bg-gradient-to-b from-secondary/10 via-primary/10 to-info/10">
+        <div className="bg-gradient-to-l from-secondary/10 via-primary/10 to-info/10 z-50">
+          <Header />
+        </div>
         <div className="mt-16">
           <Outlet />
         </div>

@@ -136,7 +136,7 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center mx-4 md:mx-8 my-2 mb-16">
+    <div className="flex flex-col md:flex-row justify-center items-center mx-4 md:mx-8 my-8 mb-16">
       <ToastContainer
         position="bottom-right"
         autoClose={1000}
@@ -147,7 +147,7 @@ const EditProfile = ({ user }) => {
 
       <form
         onSubmit={handleSaveProfileClick}
-        className="max-w-2xl p-6 bg-base-100 shadow-xl shadow-base-content/20 border-t-4 border-secondary rounded-2xl space-y-6 w-full"
+        className="max-w-2xl p-6 bg-base-100 shadow-xl shadow-base-content/20 border-t-4 border-secondary rounded-2xl space-y-6 w-full h-screen"
       >
         <h3 className="text-xl md:text-2xl font-bold text-center">
           Edit Profile

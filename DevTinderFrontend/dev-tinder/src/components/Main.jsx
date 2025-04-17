@@ -21,7 +21,7 @@ const Main = () => {
         <div
           className={`${
             !showSidebar && "hidden md:block"
-          } z-10 absolute md:fixed shadow-lg">  left-0 w-full sm:w-3/6 md:w-1/3`}
+          } z-10 absolute md:fixed shadow-lg left-0 w-full sm:w-3/6 md:w-1/3 `}
         >
           <SideSection />
         </div>
@@ -35,7 +35,7 @@ const Main = () => {
           className={`${
             showSidebar &&
             "z-0 hidden [scrollbar-width:none] [-ms-overflow-style:none] overflow-y-scroll"
-          } md:absolute right-0 w-full sm:w-3/6 md:w-2/3`}
+          } md:absolute right-0 w-full sm:w-3/6 md:w-2/3 bg-gradient-to-t from-transparent via-primary/10 to-info/10 overflow-hidden`}
         >
           <Outlet />
         </div>

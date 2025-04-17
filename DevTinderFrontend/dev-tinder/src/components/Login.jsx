@@ -69,7 +69,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen md:fixed md:left-0 md:right-0 md:top-10 md:bottom-0  flex items-center justify-center bg-gradient-to-br from-base-100 to-base-200 p-4 ">
+    <div className="min-h-screen md:fixed md:left-0 md:right-0 md:top-10 md:bottom-0  flex items-center justify-center bg-gradient-to-l from-secondary/10 via-primary/10 to-info/10 p-4 ">
       <div className="w-full max-w-6xl flex flex-col lg:flex-row bg-base-100 rounded-2xl overflow-hidden shadow-2xl border border-base-300">
         {/* Vibrant Left Section */}
         <div className="hidden md:block lg:w-1/2 p-10 text-white bg-gradient-to-br from-info via-primary to-secondary">

@@ -145,7 +145,7 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
   };
 
   return (
-    <div className="flex mt-2 flex-col w-full h-[75vh] max-w-md bg-base-100 rounded-xl overflow-hidden shadow-lg border border-base-200">
+    <div className="flex mt-2 flex-col w-full h-[75vh] max-w-md rounded-xl overflow-hidden shadow-lg border border-base-200">
       {/* Header with gradient background */}
       <div className="bg-gradient-to-r from-info/10 to-transparent p-4 flex items-center gap-3">
         <button
@@ -194,9 +194,9 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
 
       {/* Chat Body */}
       <div
-        className="flex-1 [scrollbar-width:none] [-ms-overflow-style:none] overflow-y-auto p-4 space-y-4 bg-base-100 transition-all duration-300 
+        className="flex-1 [scrollbar-width:none] [-ms-overflow-style:none] overflow-y-auto p-4 space-y-4 transition-all duration-300 
        bg-[radial-gradient(rgba(212,212,216,0.2)_1px,transparent_1px)] [background-size:16px_16px]
-       dark:bg-[radial-gradient(rgba(63,63,70,0.2)_1px,transparent_1px)]"
+       dark:bg-[radial-gradient(rgba(63,63,70,0.2)_1px,transparent_1px)] bg-gradient-to-t from-info/10 to-transparent "
       >
         {(() => {
           const grouped = {};
@@ -312,7 +312,7 @@ const Chat = ({ targetUser, setChatWith, onlineStatus }) => {
       </div>
 
       {/* Message Input */}
-      <div className="p-3 bg-base-100 border-t border-base-200 flex items-center gap-2">
+      <div className="p-3 bg-gradient-to-r from-info/10 to-transparent  border-t border-base-200 flex items-center gap-2">
         <button
           className={`btn btn-circle btn-sm ${
             showEmojis ? "btn-secondary" : "btn-ghost"
