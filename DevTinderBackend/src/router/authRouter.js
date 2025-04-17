@@ -17,7 +17,7 @@ authRouter.post("/signup", async (req, res) => {
     });
     await user.save();
     const token = await user.getJWT();
-    res.cookie("token", token);
+    res.cookie("token", token, { maxAge: 7 * 24 * 60 * 60 * 1000 });
     res.json({ message: "Registration Successfully", data: user });
   } catch (error) {
     res.status(400).json({
@@ -38,7 +38,7 @@ authRouter.post("/login", async (req, res) => {
     const isCorrectPassword = await user.validPassword(password);
     if (!isCorrectPassword) throw new Error("Invaild credential");
     const token = await user.getJWT();
-    res.cookie("token", token);
+    res.cookie("token", token, { maxAge: 7 * 24 * 60 * 60 * 1000 });
     res.json({ message: "Login successfully", data: user });
   } catch (error) {
     res.status(400).json({

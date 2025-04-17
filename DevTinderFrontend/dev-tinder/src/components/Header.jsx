@@ -105,7 +105,7 @@ const Header = () => {
               </svg>
 
               {/* Text with sliding underline */}
-              <span className="ml-2 font-medium bg-gradient-to-r from-pink-500 to-base-content bg-clip-text text-transparent dark:group-hover:text-info transition-colors">
+              <span className="ml-2 font-medium bg-gradient-to-r from-pink-500 to-base-content bg-clip-text text-transparent dark:group-hover:text-secondary transition-colors">
                 Explore
                 <span className="block absolute bottom-0 left-0 w-0 h-0.5 bg-pink-500 transition-all duration-300 group-hover:w-full"></span>
               </span>
@@ -195,104 +195,104 @@ const Header = () => {
               <span className="text-md font-medium bg-gradient-to-r from-pink-500 to-base-content bg-clip-text text-transparent uppercase">
                 {user?.firstName} {user?.lastName}
               </span>
-              <div className="dropdown dropdown-end">
-                <button className="group flex items-center justify-center rounded-full border-2 border-secondary/20 hover:border-secondary/50 transition-all duration-300 p-0.5 focus:outline-none focus:ring-2 focus:ring-secondary/30">
-                  <div className="relative rounded-full overflow-hidden h-8 w-8">
-                    <img
-                      src={user.photoUrl}
-                      alt="Profile"
-                      className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-                </button>
+            </div>
+            <div className="dropdown dropdown-end">
+              <button className="group flex items-center justify-center rounded-full border-2 border-secondary/20 hover:border-secondary/50 transition-all duration-300 p-0.5 focus:outline-none focus:ring-2 focus:ring-secondary/30">
+                <div className="relative rounded-full overflow-hidden h-8 w-8">
+                  <img
+                    src={user.photoUrl}
+                    alt="Profile"
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </button>
 
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu menu-sm bg-base-100 rounded-box w-52 p-2 shadow-lg z-50 mt-3 border border-base-300"
-                >
-                  <div className="px-4 py-3 border-b border-base-300">
-                    <p className="text-xs text-base-content/60">Signed in as</p>
-                    <p className="text-sm font-medium truncate">
-                      {user.firstName} {user.lastName}
-                    </p>
-                  </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu menu-sm bg-base-100 rounded-box w-52 p-2 shadow-lg z-50 mt-3 border border-base-300"
+              >
+                <div className="px-4 py-3 border-b border-base-300">
+                  <p className="text-xs text-base-content/60">Signed in as</p>
+                  <p className="text-sm font-medium truncate">
+                    {user.firstName} {user.lastName}
+                  </p>
+                </div>
 
-                  <li>
-                    <Link
-                      to="/profile"
-                      className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-base-300 active:bg-base-300 transition-colors"
-                      onClick={() => document.activeElement.blur()} // Close dropdown
+                <li>
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-base-300 active:bg-base-300 transition-colors"
+                    onClick={() => document.activeElement.blur()} // Close dropdown
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
-                      Your Profile
-                    </Link>
-                  </li>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                    Your Profile
+                  </Link>
+                </li>
 
-                  <li>
-                    <Link
-                      to="/"
-                      className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-base-300 active:bg-base-300 transition-colors"
-                      onClick={() => document.activeElement.blur()} // Close dropdown
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-base-300 active:bg-base-300 transition-colors"
+                    onClick={() => document.activeElement.blur()} // Close dropdown
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                      Explore
-                    </Link>
-                  </li>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                    Explore
+                  </Link>
+                </li>
 
-                  <li className="border-t border-base-300 mt-1">
-                    <button
-                      onClick={() => {
-                        handleLogoutClick();
-                        document.activeElement.blur(); // Close dropdown
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-error hover:bg-error/10 active:bg-error/10 transition-colors"
+                <li className="border-t border-base-300 mt-1">
+                  <button
+                    onClick={() => {
+                      handleLogoutClick();
+                      document.activeElement.blur(); // Close dropdown
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 text-sm text-error hover:bg-error/10 active:bg-error/10 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                        />
-                      </svg>
-                      Sign out
-                    </button>
-                  </li>
-                </ul>
-              </div>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                      />
+                    </svg>
+                    Sign out
+                  </button>
+                </li>
+              </ul>
             </div>
           </div>
         )}
