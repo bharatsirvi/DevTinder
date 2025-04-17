@@ -49,25 +49,7 @@ const Feed = () => {
     <div className="w-full h-screen z-0 flex justify-center items-start px-4 py-4">
       <div className="w-full md:w-1/2 mt-10 md:mt-0 relative">
         {loading ? (
-          <div className="card-stack-wrapper relative h-96 md:h-120">
-            {[...Array(MAX_VISIBLE_CARDS)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-full rounded-2xl overflow-hidden border border-base-300"
-                style={{
-                  zIndex: 30 - i * 10,
-                  top: `${i * 5}px`,
-                  left: `${-i * 8}px`, // Each lower card is shifted left
-                  transform: `rotate(${-i * 0.5}deg)`,
-                  boxShadow: `0 ${1 + i}px ${2 + i * 2}px rgba(0, 0, 0, 0.${
-                    1 + i
-                  })`,
-                }}
-              >
-                <UserCardSkeleton />
-              </div>
-            ))}
-          </div>
+          <UserCardSkeleton/>
         ) : feed.length > 0 ? (
           <div className="relative w-[80%] aspect-[3/5] mx-auto md:mt-8">
             {feed.slice(0, 3).map((user, i) => (

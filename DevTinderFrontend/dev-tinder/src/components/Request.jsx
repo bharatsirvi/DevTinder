@@ -64,7 +64,7 @@ const Request = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="flex flex-col items-center justify-center text-center p-8 rounded-xl bg-gradient-to-b from-base-100 to-base-100/50 shadow-md border border-base-200"
+            className="flex flex-col items-center justify-center text-center p-8 rounded-xl "
           >
             {/* Decorative elements */}
             <div className="relative">

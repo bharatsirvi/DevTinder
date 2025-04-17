@@ -53,8 +53,10 @@ const Body = () => {
     fecthUser();
     fetchRequests();
     if (user) {
-      if (user?.photoUrl) navigate("/");
-      else navigate("/signup/setup");
+      if (user?.photoUrl) {
+        if (location.pathname === "/profile") navigate("/profile");
+        else navigate("/");
+      } else navigate("/signup/setup");
     }
   }, [userId]);
 

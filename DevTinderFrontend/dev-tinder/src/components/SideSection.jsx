@@ -9,13 +9,13 @@ const SideSection = () => {
   const requests = useSelector((state) => state.requests);
 
   return (
-    <div className="flex flex-col  shadow-lg">
+    <div className="flex flex-col shadow-lg">
       {/* Header Buttons */}
-      <div className="px-2 z-40 pt-4 fixed  left-0 right-0 md:left-0 md:right-2/3 pb-2 bg-info/10">
+      <div className="px-2 z-40 pt-4 fixed left-0 right-0 md:left-0 md:right-2/3 pb-2 bg-info/10">
         <div className="absolute bottom-0 left-0 right-0 h-[1px] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-info/50 via-secondary/40 to-transparent opacity-80"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-info/50 via-secondary/40 to-transparent opacity-60"></div>
         </div>
-        <div className="flex  justify-around items-center rounded-lg bg-base-200 p-1 relative">
+        <div className="flex justify-around items-center rounded-lg bg-base-300/30 p-1 relative">
           {/* Tab Buttons */}
           {["Matches", "Requests"].map((item, index) => (
             <button
