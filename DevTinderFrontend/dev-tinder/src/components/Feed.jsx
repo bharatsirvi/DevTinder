@@ -66,7 +66,7 @@ const Feed = () => {
                   }),
                 }}
               >
-                <div className="card h-full">
+                <div className={`card h-full ${i != 0 && "pointer-events-none"}`}>
                   <UserCard user={user} />
                 </div>
               </div>
