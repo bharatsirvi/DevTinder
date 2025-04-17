@@ -13,6 +13,9 @@ const Main = () => {
     if (location.pathname === "/profile") {
       dispatch(setShowSidebar(false));
     }
+    if (location.pathname === "/") {
+      dispatch(setShowSidebar(false));
+    }
   }, [location]);
 
   return (
@@ -35,7 +38,7 @@ const Main = () => {
           className={`${
             showSidebar &&
             "z-0 hidden [scrollbar-width:none] [-ms-overflow-style:none] overflow-y-scroll"
-          } md:absolute right-0 w-full sm:w-3/6 md:w-2/3 bg-gradient-to-t from-transparent via-primary/10 to-info/10 overflow-hidden`}
+          } md:absolute right-0 w-full sm:w-3/6 md:w-2/3 bg-gradient-to-t from-transparent via-primary/10 to-info/10 overflow-x-hidden`}
         >
           <Outlet />
         </div>

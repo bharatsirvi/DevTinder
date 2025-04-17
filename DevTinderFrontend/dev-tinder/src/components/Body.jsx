@@ -52,47 +52,45 @@ const Body = () => {
   useEffect(() => {
     fecthUser();
     fetchRequests();
+    const socket = createSocketConnection();
+
     if (user) {
       if (user?.photoUrl) {
+        socket.connect();
+        socket.emit("userOnline", userId);
+        socket.emit("getUnseenMessageCounts", userId);
+        socket.on("unseenMessageCounts", (unseenCounts) => {
+          dispatch(addUnseenCounts(unseenCounts));
+        });
+        socket.on("newRequest", (data) => {
+          console.log("New request received!", data);
+          dispatch(addRequest(data));
+        });
+        socket.on("requestAccepted", (data) => {
+          console.log("your request Accepted!", data);
+          dispatch(addConnection(data));
+        });
+
+        socket.on("updateOnlineUsers", (userList) => {
+          dispatch(addOnlineUsers(userList));
+        });
+
+        socket.on("newMessageReceived", (data) => {
+          const { from, to } = data;
+          if (to.toString() === userId.toString())
+            dispatch(incrementUnseenCount(from));
+        });
+
         if (location.pathname === "/profile") navigate("/profile");
         else navigate("/");
       } else navigate("/signup/setup");
     }
-  }, [userId]);
-
-  useEffect(() => {
-    const socket = createSocketConnection();
-    if (userId) {
-      socket.connect();
-
-      socket.emit("userOnline", userId);
-      socket.emit("getUnseenMessageCounts", userId);
-      socket.on("unseenMessageCounts", (unseenCounts) => {
-        dispatch(addUnseenCounts(unseenCounts));
-      });
-      socket.on("newRequest", (data) => {
-        console.log("New request received!", data);
-        dispatch(addRequest(data));
-      });
-      socket.on("requestAccepted", (data) => {
-        console.log("your request Accepted!", data);
-        dispatch(addConnection(data));
-      });
-    }
-    socket.on("updateOnlineUsers", (userList) => {
-      dispatch(addOnlineUsers(userList));
-    });
-
-    socket.on("newMessageReceived", (data) => {
-      const { from, to } = data;
-      if (to.toString() === userId.toString())
-        dispatch(incrementUnseenCount(from));
-    });
 
     return () => {
       socket.disconnect();
     };
   }, [userId]);
+
 
   return (
     <>

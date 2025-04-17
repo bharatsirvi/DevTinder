@@ -666,7 +666,7 @@ const InitialSetup = () => {
                         Saving...
                       </>
                     ) : (
-                      "Complete Profile"
+                      "Complete"
                     )}
                   </button>
                 </div>

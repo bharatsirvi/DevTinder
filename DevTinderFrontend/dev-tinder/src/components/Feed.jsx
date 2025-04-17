@@ -49,7 +49,7 @@ const Feed = () => {
     <div className="w-full h-screen z-0 flex justify-center items-start px-4 py-4">
       <div className="w-full md:w-1/2 mt-10 md:mt-0 relative">
         {loading ? (
-          <UserCardSkeleton/>
+          <UserCardSkeleton />
         ) : feed.length > 0 ? (
           <div className="relative w-[80%] aspect-[3/5] mx-auto md:mt-8">
             {feed.slice(0, 3).map((user, i) => (
