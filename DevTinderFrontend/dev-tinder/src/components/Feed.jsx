@@ -6,32 +6,48 @@ import { addFeed } from "../utils/slices/feedSlice";
 import ErrorPage from "./Error";
 import UserCard from "./UserCard";
 import { useNavigate } from "react-router-dom";
+import UserCardSkeleton from "./UserCardSkeleton";
 
 const Feed = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const feed = useSelector((state) => state.feed);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getFeed = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(BACKEND_BASE_URL + "/user/feed", {
           withCredentials: true,
         });
         dispatch(addFeed(res.data.data));
+        setError(null);
       } catch (err) {
-        if (err.status == 401) navigate("/login");
-        else return <ErrorPage />;
+        if (err.response?.status === 401) {
+          navigate("/login");
+        } else {
+          setError(err);
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
     getFeed();
-  }, [dispatch]);
+  }, [dispatch, navigate]);
+
+  if (error) {
+    return <ErrorPage />;
+  }
 
   return (
     <div className="w-full z-0 flex justify-center items-start px-4 py-4">
       <div className="w-9/12 md:w-1/2 mt-10 md:mt-0">
-        {feed.length > 0 ? (
+        {loading ? (
+         <UserCardSkeleton/>
+        ) : feed.length > 0 ? (
           <UserCard user={feed[0]} key={feed[0]._id} />
         ) : (
           <div className="relative mt-20 rounded-2xl p-8 md:p-12 flex flex-col items-center justify-center text-center bg-gradient-to-br from-base-100 to-base-200 border border-base-300/50 shadow-xl overflow-hidden">
