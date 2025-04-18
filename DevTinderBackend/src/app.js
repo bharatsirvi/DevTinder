@@ -15,7 +15,7 @@ const chatRouter = require("./router/chatRouter");
 const cors = require("cors");
 const app = express();
 const { initializeSocket } = require("./utils/socket");
-const path = require("path");
+
 
 app.use(
   cors({
@@ -26,6 +26,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  res.setHeader("Cross-Origin-Embedder-Policy", "unsafe-none");
+  next();
+});
 
 app.use("/", authRouter);
 app.use("/", profileRouter);

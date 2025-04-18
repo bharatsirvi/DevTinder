@@ -30,7 +30,10 @@ const UserCardSkeleton = () => {
             <div className="h-4 w-16 bg-base-300 rounded-full mb-2"></div>
             <div className="flex flex-wrap gap-2">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="h-6 w-16 bg-base-300 rounded-full"></div>
+                <div
+                  key={i}
+                  className="h-6 w-16 bg-base-300 rounded-full"
+                ></div>
               ))}
             </div>
           </div>

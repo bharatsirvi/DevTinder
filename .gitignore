@@ -17,7 +17,8 @@ DevTinderBackend/*.pyc
 DevTinderBackend/*.log
 DevTinderBackend/.env
 node_modules/
-
+DevTinderBackend/serviceAccountKey.json
+/serviceAccountKey.json
 # === COMMON ===
 .env
 *.log

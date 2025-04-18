@@ -28,13 +28,26 @@ const userSchema = new mongoose.Schema(
           throw new Error("Email must be in vaild format");
       },
     },
+
     password: {
       type: String,
-      require: true,
-      validate(value) {
-        if (!validator.isStrongPassword(value))
-          throw new Error("password must be strong");
+      required: function () {
+        return this.authProvider === "email"; // ✅ only required for email signups
       },
+      validate(value) {
+        // Only validate password strength if it's provided
+        if (
+          this.authProvider === "email" &&
+          !validator.isStrongPassword(value)
+        ) {
+          throw new Error("Password must be strong");
+        }
+      },
+    },
+    authProvider: {
+      type: String,
+      enum: ["email", "google"],
+      default: "email",
     },
     age: {
       type: Number,
@@ -62,6 +75,7 @@ const userSchema = new mongoose.Schema(
         if (value.length > 10) throw new Error("Skill cannot be more then 10");
       },
     },
+    isVerified: { type: Boolean, default: false },
   },
   {
     timestamps: true,

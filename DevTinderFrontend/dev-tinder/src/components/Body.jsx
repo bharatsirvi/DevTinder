@@ -91,7 +91,6 @@ const Body = () => {
     };
   }, [userId]);
 
-
   return (
     <>
       <div className="bg-gradient-to-b from-secondary/10 via-primary/10 to-info/10">

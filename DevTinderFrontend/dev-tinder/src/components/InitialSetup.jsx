@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect, use, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -50,9 +50,26 @@ const InitialSetup = () => {
   const [dragActive, setDragActive] = useState(false);
   const [customSkill, setCustomSkill] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const user = useSelector((store) => store.user);
+
   const navigate = useNavigate();
+  const fetchName = async () => {
+    try {
+      const response = await axios.get(BACKEND_BASE_URL + "/profile/view", {
+        withCredentials: true,
+      });
+      const data = response?.data?.data;
+      setFormData((prev) => ({
+        ...prev,
+        firstName: data?.firstName || "",
+        lastName: data?.lastName === "NULL" ? "" : data?.lastName,
+      }));
+    } catch (error) {
+      if (error.status == 401) return navigate("/login");
+      else return <ErrorPage />;
+    }
+  };
   useEffect(() => {
+    fetchName();
     setFunFact(FunFacts[Math.floor(Math.random() * FunFacts.length)]);
   }, []);
 
@@ -139,6 +156,8 @@ const InitialSetup = () => {
     setIsSubmitting(true);
     try {
       const formDataToSend = new FormData();
+      formDataToSend.append("firstName", formData.firstName);
+      formDataToSend.append("lastName", formData.lastName);
       formDataToSend.append("age", formData.age);
       formDataToSend.append("gender", formData.gender);
       formDataToSend.append("about", formData.about);
@@ -180,9 +199,13 @@ const InitialSetup = () => {
     { name: "Languages", icon: <Languages size={18} /> },
   ];
 
-  const isStep1Valid = formData.age && formData.gender && formData.photo;
-  // Skills are now optional
-  const isStep3Valid = true; // About is optional
+  const isStep1Valid =
+    formData.age &&
+    formData.gender &&
+    formData.photo &&
+    formData.firstName?.length > 2 &&
+    formData.lastName?.length > 2;
+  const isStep3Valid = true;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-l from-secondary/10 via-primary/10 to-info/10 p-4">
@@ -332,6 +355,40 @@ const InitialSetup = () => {
             {step === 1 && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h2 className="text-2xl font-bold">Basic Information</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-medium">First Name</span>
+                      <span className="text-error">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className="input input-bordered w-full"
+                      min="3"
+                      max="20"
+                      placeholder="Alex"
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-medium">Last Name</span>
+                      <span className="text-error">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className="input input-bordered w-full"
+                      min="3"
+                      max="20"
+                      placeholder="John"
+                    />
+                  </div>
+                </div>
 
                 <div className="form-control mb-8">
                   <label className="label">
@@ -345,7 +402,7 @@ const InitialSetup = () => {
                       dragActive
                         ? "border-secondary bg-secondary/5"
                         : "border-dashed border-base-300"
-                    } rounded-xl p-6 transition-all duration-200`}
+                    } rounded-xl p-6 transition-all relative duration-200`}
                     onDragEnter={handleDrag}
                     onDragOver={handleDrag}
                     onDragLeave={handleDrag}
@@ -388,7 +445,7 @@ const InitialSetup = () => {
                           type="file"
                           accept=".jpeg,.jpg,.png,.gif"
                           onChange={handlePhotoChange}
-                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                          className="absolute inset-0 opacity-0 cursor-pointer"
                         />
                       </>
                     )}
@@ -410,7 +467,7 @@ const InitialSetup = () => {
                       className="input input-bordered w-full"
                       min="18"
                       max="100"
-                      placeholder="e.g., 25"
+                      placeholder="e.g. 25"
                     />
                   </div>
 

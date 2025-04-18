@@ -41,7 +41,7 @@ const Match = () => {
     return () => {
       setChatWith(null);
     };
-  }, [userId,showSidebar]);
+  }, [userId, showSidebar]);
 
   return chatWith ? (
     <Chat
