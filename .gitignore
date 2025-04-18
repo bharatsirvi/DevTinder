@@ -10,7 +10,7 @@ DevTinderFrontend/dev-tinder/yarn-error.log*
 DevTinderFrontend/dev-tinder/pnpm-debug.log*
 DevTinderFrontend/dev-tinder/lerna-debug.log*
 
-# === BACKEND ===
+# === BACKEND === //
 DevTinderBackend/venv/
 DevTinderBackend/__pycache__/
 DevTinderBackend/*.pyc
